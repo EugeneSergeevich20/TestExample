@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Xsl;
 
 namespace TestExample.Services
@@ -36,9 +37,33 @@ namespace TestExample.Services
             {
                 xslt.Transform(inputFile, null, sw);
                 string result = sw.ToString();
-                File.WriteAllText(outputFile, result);
+                File.WriteAllText(outputFile, result, Encoding.UTF8);
                 return result;
             }
+        }
+
+        public static void AddTotalAamountAttribute(string xmlText)
+        {
+            XDocument doc = XDocument.Parse(xmlText);
+
+            foreach (var employee in doc.Descendants("Employee"))
+            {
+                double total = 0;
+                foreach (var salary in employee.Elements("salary"))
+                {
+                    string amountStr = salary.Attribute("amount")?.Value;
+                    if (!string.IsNullOrEmpty(amountStr))
+                    {
+                        amountStr = amountStr.Replace('.', ',');
+                        if (double.TryParse(amountStr, out double amount))
+                        {
+                            total += amount;
+                        }
+                    }
+                }
+                employee.SetAttributeValue("totalAmount", total.ToString("F2"));
+            }
+            doc.Save(@"Resources\Output\Employee.xml");
         }
 
     }

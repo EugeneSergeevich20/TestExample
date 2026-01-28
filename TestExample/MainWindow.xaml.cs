@@ -37,6 +37,8 @@ namespace TestExample
             try
             {
                 employeeXml = XmlService.XsltTransform(xsltFile, inputFile);
+
+                XmlService.AddTotalAamountAttribute(employeeXml);
             } 
             catch (Exception ex)
             {
