@@ -1,0 +1,28 @@
+﻿<Window x:Class="TestExample.AddRecordWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestExample"
+        mc:Ignorable="d"
+        Title="AddRecordWindow" Height="200" Width="250">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Заполните данные:" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Имя:" VerticalAlignment="Top" Margin="20,30,0,0"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Фамилия:" VerticalAlignment="Top" Margin="20,50,0,0"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Месяц:" VerticalAlignment="Top" Margin="20,70,0,0"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Зарплата:" VerticalAlignment="Top" Margin="20,90,0,0"/>
+        <TextBox x:Name="name" HorizontalAlignment="Right" Margin="0,30,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="surname" HorizontalAlignment="Right" Margin="0,50,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="mount" HorizontalAlignment="Right" Margin="0,70,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="amount" HorizontalAlignment="Right" Margin="0,90,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Добавить" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="-100,0,0,10" IsDefault="True" Width="60" Click="OK_Click"/>
+        <Button Content="Отмена" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="100,0,0,10" IsCancel="True" Width="60" Click="Cancel_Click"/>
+    </Grid>
+</Window>

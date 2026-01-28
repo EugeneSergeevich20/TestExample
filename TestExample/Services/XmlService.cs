@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Xsl;
+using TestExample.Model;
 
 namespace TestExample.Services
 {
@@ -87,6 +88,24 @@ namespace TestExample.Services
                 }
             }
             doc.Root.SetAttributeValue("totalAmount", total.ToString("F2"));
+            doc.Save(@"Resources\Input\Data1.xml");
+        }
+
+        public static void AddRecordToData1Xml(string name, string surname, string amount, string month)
+        {
+            if (!File.Exists(@"Resources\Input\Data1.xml"))
+                return;
+
+            XDocument doc = XDocument.Load(@"Resources\Input\Data1.xml");
+
+            XElement newItem = new XElement("item",
+                new XAttribute("name", name),
+                new XAttribute("surname", surname),
+                new XAttribute("amount", amount),
+                new XAttribute("mount", month)
+            );
+
+            doc.Root.Add(newItem);
             doc.Save(@"Resources\Input\Data1.xml");
         }
 

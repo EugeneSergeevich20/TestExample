@@ -104,5 +104,15 @@ namespace TestExample
             inputFile = @"Resources\Input\Data2.xml";
             xsltFile = @"Resources\Data2Converter.xslt";
         }
+
+        private void AddRecord_Click(object sender, RoutedEventArgs e)
+        {
+            AddRecordWindow addRecordWindow = new AddRecordWindow();
+            if (addRecordWindow.ShowDialog() == true)
+            {
+                XmlService.AddRecordToData1Xml(addRecordWindow.name.Text, addRecordWindow.surname.Text, addRecordWindow.amount.Text, addRecordWindow.mount.Text);
+                XmlTransform_Click(sender, e);
+            }
+        }
     }
 }

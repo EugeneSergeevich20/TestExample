@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TestExample"
         xmlns:Model="clr-namespace:TestExample.Model" x:Class="TestExample.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="350">
+        Title="MainWindow" Height="250" Width="350" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -32,5 +32,6 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
+        <Button Grid.Row="0" Content="Добавить запись" HorizontalAlignment="Left" Margin="15,80,0,0" VerticalAlignment="Top" Click="AddRecord_Click"/>
     </Grid>
 </Window>
