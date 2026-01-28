@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Data;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+using TestExample.Model;
 using TestExample.Services;
 
 namespace TestExample
@@ -41,11 +45,48 @@ namespace TestExample
                 XmlService.AddTotalAmountAttribute(employeeXml);
 
                 XmlService.AddTotalAmountToData1Xml();
+
+                EmployeeDataTable();
             } 
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void EmployeeDataTable()
+        {
+            if (!File.Exists(@"Resources\Output\Employee.xml"))
+                return;
+
+            XDocument doc = XDocument.Load(@"Resources\Output\Employee.xml");
+            List<Employee> employees = new List<Employee>();
+
+            foreach (var employee in doc.Descendants("Employee"))
+            {
+                Employee emp = new Employee();
+                emp.Name = $"{employee.Attribute("name")?.Value} {employee.Attribute("surname")?.Value}";
+                string totalAmount = employee.Attribute("totalAmount")?.Value;
+
+                foreach (var salary in employee.Elements("salary"))
+                {
+                    SalaryRecord salaryRecord = new SalaryRecord();
+                    salaryRecord.Mount = salary.Attribute("mount")?.Value;
+                    string amountStr = salary.Attribute("amount")?.Value;
+
+                    if (!string.IsNullOrEmpty(amountStr))
+                    {
+                        amountStr = amountStr.Replace('.', ',');
+                        if (double.TryParse(amountStr, out double amount))
+                        {
+                            salaryRecord.Amount = amount;
+                        }
+                    }
+                    emp.SalaryRecords.Add(salaryRecord);
+                }
+                employees.Add(emp);
+            }
+            employeeTreeView.ItemsSource = employees;
         }
 
         private void rbOne_Checked(object sender, RoutedEventArgs e)
