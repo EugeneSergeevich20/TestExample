@@ -42,7 +42,7 @@ namespace TestExample.Services
             }
         }
 
-        public static void AddTotalAamountAttribute(string xmlText)
+        public static void AddTotalAmountAttribute(string xmlText)
         {
             XDocument doc = XDocument.Parse(xmlText);
 
@@ -64,6 +64,30 @@ namespace TestExample.Services
                 employee.SetAttributeValue("totalAmount", total.ToString("F2"));
             }
             doc.Save(@"Resources\Output\Employee.xml");
+        }
+
+        public static void AddTotalAmountToData1Xml()
+        {
+            if (!File.Exists(@"Resources\Input\Data1.xml"))
+                return;
+
+            XDocument doc = XDocument.Load(@"Resources\Input\Data1.xml");
+            double total = 0;
+
+            foreach (var item in doc.Descendants("item"))
+            {
+                string amountStr = item.Attribute("amount")?.Value;
+                if (!string.IsNullOrEmpty(amountStr))
+                {
+                    amountStr = amountStr.Replace('.', ',');
+                    if (double.TryParse(amountStr, out double amount))
+                    {
+                        total += amount;
+                    }
+                }
+            }
+            doc.Root.SetAttributeValue("totalAmount", total.ToString("F2"));
+            doc.Save(@"Resources\Input\Data1.xml");
         }
 
     }
